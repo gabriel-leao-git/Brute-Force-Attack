@@ -91,12 +91,15 @@ medusa -h 192.168.56.101 -U wordlists/users.txt -P wordlists/passwords.txt \
 -t 6 -O results/medusa_dvwa.txt
 
 Resultado Inesperado:
-Após diversas tentativas e ajustes nos parêmetros (incluindo a troca do nível de segurança DVWA), o MEdusa não conseguiu encontrar a credencial correta (admin:password) de forma confiável. Em algumas execuções, ele retornou poucos resultados, mas sem sucesso claro.
+
+Após diversas tentativas e ajustes nos parêmetros (incluindo a troca do nível de segurança DVWA), o Medusa não conseguiu encontrar a credencial correta (admin:password) de forma confiável. Em algumas execuções, ele retornou poucos resultados, mas sem sucesso claro.
 
 Em algumas pesquisas:
+
 Descobri que o módulo http do Medusa tem limitações para lidar com sessões e cookies, comuns em aplicações web como o DVWA. Embora o comando acima seja teoricamente correto, a ferramenta pode não interpretar adequadamente a resposta do servidor ou manter o estado da sessão. Por isso. em cenários reais de teste de intrusão web, ferramentas como Hydra ou Burp Suite são mais recomendadas.
 
 Com esse desafio, pude aprender:
+
 Ataques a formulários web exigem compreensão do contexto da aplicação (cookies, tokens, redirecionamentos) e que nem toda ferramenta de força bruta é adequada para os cenários. A tentativa com Medusa, mesmo não tendo sido totalmente bem sucedida, foi válida para demonstrar essa limitação e a importância de escolher a ferramenta correta.
 
 
@@ -104,19 +107,25 @@ Ataques a formulários web exigem compreensão do contexto da aplicação (cooki
 Nesta técnica, utilizamos uma única senha contra uma lista de usuários válidos, evitando bloqueios por múltiplas tentativas com o memo usuário
 
 Enumeração de usuários SMB com enum4linux:
+
 enum4linux -U 192.168.56.101 | tee results/enum4linux.txt
 
 A partir dessa saída, extraí os seguintes usuários e criei uma wordlist específica
+
 nano wordlists/smb_users.txt
 
 Ataque de password spraying com Medusa (usando a senha msfadmin)
+
 medusa -h 192.168.101 -U wordlists/smb_users.txt -p msfadmin -M smbnt -f -O results/medusa_smb.txt
 
 Resultado:
+
 cat results/medusa_smb.txt
+
 ACCOUNT FOUND: [smbnt] Host: 192.168.56.101 User: msfadmin Password: msfadmin [SUCCESS]
 
 Conclusão dos testes:
+
 O ambiente Metasploitable 2 confirmou-se extremamente vulnerável devido ao uso de credenciais padrão e serviços desnecessários expostos. O ataque ao DVWA evidenciou a importância de escolher a ferramenta adequada para cada contexto.
 
 
