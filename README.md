@@ -35,9 +35,9 @@ nano wordlists/users.txt
 Lista de senhas
 nano wordlists/passwords.txt
 
-Cenários de Ataque
+# Cenários de Ataque
 
-# 1. FTP-Força Bruta com Medusa
+## 1. FTP-Força Bruta com Medusa
 Enumeração do serviço
 nmap -p -sV 192.168.56.101
 
