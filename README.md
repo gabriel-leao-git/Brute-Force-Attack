@@ -9,7 +9,6 @@ Este projeto tem fins educacionais e demonstra, na prática, como realizar ataqu
     - [2. Formulário Web (DVWA)](#2-formulário-web-dvwa)
     - [3. SMB - Password Spraying](#3-smb--password-spraying)
  - [Resultados Obtidos](resultados-e-boas-práticas)
- - [Checklist do Projeto](#checklist-do-projeto)
  - [Conclusão](#conclusão)
 
 
@@ -62,7 +61,7 @@ ftp> ls
 ftp> quit
 
 
-# 2. Formulário Web (DVWA)
+## 2. Formulário Web (DVWA)
 O DVWA (Damn Vulnerable Web Application) está disponível no Metasploitable em http://192.168.56.101/dvwa. Antes do ataque, o nível de segurança foi alterado para "low" (via interface web) para desabilitar proteções como tokens CSRF.
 
 Identificando a mensagem de falha:
@@ -89,7 +88,7 @@ Com esse desafio, pude aprender:
 Ataques a formulários web exigem compreensão do contexto da aplicação (cookies, tokens, redirecionamentos) e que nem toda ferramenta de força bruta é adequada para os cenários. A tentativa com Medusa, mesmo não tendo sido totalmente bem sucedida, foi válida para demonstrar essa limitação e a importância de escolher a ferramenta correta.
 
 
-# 3. SMB-Password Spraying
+## 3. SMB-Password Spraying
 Nesta técnica, utilizamos uma única senha contra uma lista de usuários válidos, evitando bloqueios por múltiplas tentativas com o memo usuário
 
 Enumeração de usuários SMB com enum4linux:
@@ -109,7 +108,7 @@ Conclusão dos testes:
 O ambiente Metasploitable 2 confirmou-se extremamente vulnerável devido ao uso de credenciais padrão e serviços desnecessários expostos. O ataque ao DVWA evidenciou a importância de escolher a ferramenta adequada para cada contexto.
 
 
-Mitigações e Boas Práticas
+# Mitigações e Boas Práticas
 
 Com base nos ataques simulados, recomenda-se:
 
