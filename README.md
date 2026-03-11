@@ -38,10 +38,12 @@ nano wordlists/passwords.txt
 
 ## 1. FTP-Força Bruta com Medusa
 Enumeração do serviço
+
 nmap -p -sV 192.168.56.101
 
 saída:
 PORT    STATE  SERVICE  VERSION
+
 21/tcp  open   ftp      vsftpd 2.3.4
 
 Ataque com Medusa:
