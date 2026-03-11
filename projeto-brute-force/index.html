@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brute Force Attack Lab · Documentação</title>
+    <!-- Fontes e ícones -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="shortcut icon" href="imagens/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="design/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">🔐 BruteForceLab</a>
+            <ul class="nav-links">
+                <li><a href="#ambiente">Ambiente</a></li>
+                <li><a href="#wordlists">Wordlists</a></li>
+                <li><a href="#ataques">Ataques</a></li>
+                <li><a href="#resultados">Resultados</a></li>
+                <li><a href="#mitigacoes">Mitigações</a></li>
+                <li><a href="#checklist">Checklist</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <h1>Força bruta em ambiente controlado</h1>
+            <p>Kali Linux · Medusa · Metasploitable 2 · DVWA</p>
+            <p class="hero-description">Projeto prático de segurança ofensiva simulando ataques de força bruta e password spraying. Entenda como atacantes exploram credenciais fracas e como se proteger.</p>
+            <div class="hero-badges">
+                <span class="badge"><i class="fas fa-check-circle"></i> FTP</span>
+                <span class="badge"><i class="fas fa-check-circle"></i> DVWA</span>
+                <span class="badge"><i class="fas fa-check-circle"></i> SMB</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Ambiente -->
+        <section id="ambiente" class="section">
+            <div class="container">
+                <h2 class="section-title"><i class="fas fa-network-wired"></i> Configuração do ambiente</h2>
+                <div class="env-grid">
+                    <div class="env-card">
+                        <h3><i class="fas fa-laptop"></i> Atacante (Kali Linux)</h3>
+                        <p><span class="label">IP:</span> <code>192.168.56.102</code></p>
+                        <p><span class="label">Ferramentas:</span> Medusa, Hydra, Nmap, enum4linux</p>
+                    </div>
+                    <div class="env-card">
+                        <h3><i class="fas fa-server"></i> Alvo (Metasploitable 2)</h3>
+                        <p><span class="label">IP:</span> <code>192.168.56.101</code></p>
+                        <p><span class="label">Serviços:</span> FTP (21), HTTP (80), SMB (445)</p>
+                    </div>
+                    <div class="env-card">
+                        <h3><i class="fas fa-globe"></i> Rede</h3>
+                        <p><span class="label">Modo:</span> Host-Only (vboxnet0)</p>
+                        <p><span class="label">Rede:</span> <code>192.168.56.0/24</code></p>
+                        <p><span class="label">Conectividade:</span> <code>ping -c 4 192.168.56.101</code> ✅</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wordlists -->
+        <section id="wordlists" class="section bg-darker">
+            <div class="container">
+                <h2 class="section-title"><i class="fas fa-list"></i> Wordlists criadas</h2>
+                <div class="wordlists-grid">
+                    <div class="wordlist-card">
+                        <h3>📁 users.txt</h3>
+                        <pre><code>root
+msfadmin
+user
+admin
+postgres</code></pre>
+                    </div>
+                    <div class="wordlist-card">
+                        <h3>🔑 passwords.txt</h3>
+                        <pre><code>msfadmin
+password
+123456
+admin
+toor
+root</code></pre>
+                    </div>
+                </div>
+                <p class="note"><i class="fas fa-info-circle"></i> Comandos para criar as pastas e arquivos:</p>
+                <pre class="code-block"><code>mkdir -p ~/medusa-lab/{wordlists,results}
+cd ~/medusa-lab
+nano wordlists/users.txt   # (ou usando cat/echo)</code></pre>
+            </div>
+        </section>
+
+        <!-- Cenários de ataque (abas interativas) -->
+        <section id="ataques" class="section">
+            <div class="container">
+                <h2 class="section-title"><i class="fas fa-bolt"></i> Cenários de ataque</h2>
+                <div class="tabs">
+                    <button class="tab-button active" data-tab="ftp">FTP</button>
+                    <button class="tab-button" data-tab="dvwa">DVWA (Web)</button>
+                    <button class="tab-button" data-tab="smb">SMB (Password Spraying)</button>
+                </div>
+                <div id="tab-content" class="tab-content">
+                    <!-- O conteúdo será preenchido via JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Resultados -->
+        <section id="resultados" class="section bg-darker">
+            <div class="container">
+                <h2 class="section-title"><i class="fas fa-table"></i> Resultados obtidos</h2>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr><th>Serviço</th><th>Credencial</th><th>Observação</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>FTP</td><td><code>msfadmin:msfadmin</code></td><td>Acesso total ao diretório</td></tr>
+                            <tr><td>DVWA</td><td><code>admin:password</code></td><td>Obtido com Hydra (Medusa apresentou limitações)</td></tr>
+                            <tr><td>SMB</td><td><code>msfadmin:msfadmin</code></td><td>Compartilhamentos listados</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mitigações -->
+        <section id="mitigacoes" class="section">
+            <div class="container">
+                <h2 class="section-title"><i class="fas fa-shield-alt"></i> Mitigações e boas práticas</h2>
+                <ul class="mitigations-list">
+                    <li><i class="fas fa-lock"></i> <strong>Política de senhas fortes</strong>mínimo 12 caracteres com complexidade.</li>
+                    <li><i class="fas fa-ban"></i> <strong>Bloqueio de conta</strong> após 5 tentativas falhas.</li>
+                    <li><i class="fas fa-tachometer-alt"></i> <strong>Rate limiting</strong> por IP em formulários web.</li>
+                    <li><i class="fas fa-mobile-alt"></i> <strong>Autenticação multifator (MFA)</strong>segunda camada de verificação.</li>
+                    <li><i class="fas fa-power-off"></i> <strong>Desabilitar serviços desnecessários</strong> (FTP, SMB se não forem usados).</li>
+                    <li><i class="fas fa-eye"></i> <strong>Monitoramento com fail2ban</strong> para bloquear padrões de ataque.</li>
+                    <li><i class="fas fa-sync-alt"></i> <strong>Atualizações constantes</strong> de sistemas e aplicações.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Checklist -->
+        <section id="checklist" class="section bg-darker">
+            <div class="container">
+                <h2 class="section-title"><i class="fas fa-clipboard-check"></i> Checklist do projeto</h2>
+                <div class="checklist-grid">
+                    <div class="checklist-item"><i class="fas fa-check-circle"></i> Ambiente: VMs em rede host-only</div>
+                    <div class="checklist-item"><i class="fas fa-check-circle"></i> Ferramentas: Medusa, Hydra, Nmap, enum4linux</div>
+                    <div class="checklist-item"><i class="fas fa-check-circle"></i> Wordlists: users.txt e passwords.txt</div>
+                    <div class="checklist-item"><i class="fas fa-check-circle"></i> Cenário FTP: medusa_ftp.txt salvo</div>
+                    <div class="checklist-item"><i class="fas fa-check-circle"></i> Cenário Web: tentativa com Medusa + sucesso com Hydra</div>
+                    <div class="checklist-item"><i class="fas fa-check-circle"></i> Cenário SMB: enum4linux + medusa_smb.txt</div>
+                    <div class="checklist-item"><i class="fas fa-check-circle"></i> Validação: acesso FTP e SMB manual</div>
+                    <div class="checklist-item"><i class="fas fa-check-circle"></i> Documentação: comandos, prints e resultados</div>
+                    <div class="checklist-item"><i class="fas fa-check-circle"></i> Mitigações: lista em mitigacoes.md</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>Projeto desenvolvido por <a href="https://www.instagram.com/gabbriel_leao/">Gabriel Leão</a> para fins educacionais · <a href="https://github.com/gabriel-leao-git/Brute-Force-Attack" target="_blank"><i class="fab fa-github"></i> Repositório no GitHub</a> · <a class="especifico" href="https://www.linkedin.com/in/gabriel-le%C3%A3o-rio-de-janeiro-br/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a></p>
+           
+            <p class="refs">Referências: <a href="http://foofus.net/goons/jmk/medusa/medusa.html" target="_blank">Medusa</a> · <a href="https://www.exploit-db.com/docs/english/18222-metasploitable-2-exploitability-guide.pdf" target="_blank">Metasploitable 2</a> · <a href="https://owasp.org/www-community/attacks/Brute_force_attack" target="_blank">OWASP</a> · <a href="https://dvwa.co.uk/" target="_blank">DVWA</a></p>
+        </div>
+    </footer>
+
+    <script src="JS/interacao.js"></script>
+</body>
+</html>
