@@ -22,22 +22,22 @@ Este projeto tem fins educacionais e demonstra, na prática, como realizar ataqu
 - Rede: Adaptador Host-Only
 
 
-Preparação das Wordlists
+# Preparação das Wordlists
 Foram criadas listas simples baseadas em credenciais padrão conhecidas do Metasploitable
 
-# Criando estrutura de diretórios
+Criando estrutura de diretórios
 mkdir -p ~/medusa-lab/{wordlists,results}
 cd ~/medusa-lab
 
-# Lista de usuários
+Lista de usuários
 nano wordlists/users.txt
 
-# Lista de senhas
+Lista de senhas
 nano wordlists/passwords.txt
 
 Cenários de Ataque
 
-1. FTP-Força Bruta com Medusa
+# 1. FTP-Força Bruta com Medusa
 Enumeração do serviço
 nmap -p -sV 192.168.56.101
 
@@ -55,14 +55,14 @@ ACCOUNT FOUND: [ftp] Host: 192.168.56.101 User: msfadmin Password: msfadmin [SUC
 
 Validação do acesso:
 ftp 192.168.56.101
-# user: msfadmin
-# password: msfadmin
+user: msfadmin
+password: msfadmin
 ftp> ls
-# (diretórios listados)
+(diretórios listados)
 ftp> quit
 
 
-2. Formulário Web (DVWA)
+# 2. Formulário Web (DVWA)
 O DVWA (Damn Vulnerable Web Application) está disponível no Metasploitable em http://192.168.56.101/dvwa. Antes do ataque, o nível de segurança foi alterado para "low" (via interface web) para desabilitar proteções como tokens CSRF.
 
 Identificando a mensagem de falha:
@@ -89,7 +89,7 @@ Com esse desafio, pude aprender:
 Ataques a formulários web exigem compreensão do contexto da aplicação (cookies, tokens, redirecionamentos) e que nem toda ferramenta de força bruta é adequada para os cenários. A tentativa com Medusa, mesmo não tendo sido totalmente bem sucedida, foi válida para demonstrar essa limitação e a importância de escolher a ferramenta correta.
 
 
-3. SMB-Password Spraying
+# 3. SMB-Password Spraying
 Nesta técnica, utilizamos uma única senha contra uma lista de usuários válidos, evitando bloqueios por múltiplas tentativas com o memo usuário
 
 Enumeração de usuários SMB com enum4linux:
