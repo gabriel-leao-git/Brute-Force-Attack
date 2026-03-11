@@ -1,0 +1,20 @@
+Ataque dvwa
+
+1 - Acessando o formulário do alvo
+2 - testando qualquer credencial para identificar qual saída do formulário.
+3 - Pode abrir a ferramenta do desenvolvedor para verificar os "requests"
+4 - Ao tentar um acesso qualquer, é possível verificar a interação com o banco de dados do servidor.
+Clicando "Network" --> All --> "POST" e "Request" podemos verificar o "username" e "password" enviado e a ação Login.
+A resposta na tela de formulário "Login failled"
+
+6 - medusa -h 192.168.56.101 -U wordlists/users.txt -P wordlists/passwords.txt \
+-M http -m PAGE:'/dvwa/login.php' \
+-m FORM:'username=^USER^&password=^PASS^&Login=Login' \
+-m FAIL='Login failed' \
+-t 6 -O results/medusa_dvwa.txt
+
+	comando completo para o ataque, veja que usamos "Login failed", toda vez que aparecer essa mensagem a medusa tenta outra credencial até ter sucesso no login.
+
+7 - Após diversas tentativas não consegui encontrar a credencial correta (único resultado). Fiz algumas pesquisas, troquei algumas flags, mas mesmo assim não obtive o resultado esperado. A medusa apenas me devolveu poucos resultados, com a credencial no meio deles.
+
+8 - Também alterei a segurança do dvwa de "high" para "low". Resultado permaneceu o mesmo. Farei mais pesquisas para descobrir qual o verdadeiro erro e reportarei aqui.
